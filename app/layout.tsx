@@ -1,17 +1,26 @@
 import "./globals.css";
-import { Providers } from "./poviders";
-import { fonts } from "./fonts";
+import { Inter as FontSans } from "next/font/google"
+
+import { cn } from "@/lib/utils"
+ 
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+})
 
 
-export default function RootLayout({
-  children,
-}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: {children: React.ReactNode}) {
   return (
-    <html lang='de' className={fonts.rubik.variable}>
-      <body>
-        <Providers>{children}</Providers>
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable
+        )}
+      >
+        {children}
       </body>
     </html>
-    
-  );
+  )
 }
