@@ -1,3 +1,5 @@
+'use client'
+
 import { createGroup } from '@/lib/data-access/group';
 import React, { ChangeEvent, useState } from 'react'
 import { Button } from "@/components/ui/button";
