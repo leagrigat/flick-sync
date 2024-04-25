@@ -15,6 +15,8 @@ export default function CreateGroup() {
         setInput("");
     }
 
+    // Button validation - don't work when input field empty
+
   return (
     <div className="flex w-full max-w-sm items-center space-x-2">
       <Input type="text" value={input} onChange={handleInput} placeholder="Please enter a group name" />

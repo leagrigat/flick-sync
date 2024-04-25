@@ -17,3 +17,26 @@ export async function createGroup(values: NewGroup){
         .returning({id: group.id})
     })
 }
+
+// getGroupById
+/* 
+export async function getGroupById (groupId: string) {
+    const group = await db.query.group.findFirst())
+    OR
+    const group = await db.query.group.findFirst(
+        with: {
+            fields: {
+                columns: {
+                    name: false // oder sowohl name als auch groupId?
+                },
+                with: {
+                    groupId: true
+                }
+            }
+        },
+        where: eq.(group.id, groupId),
+    )}
+    if (!group) return null
+    return {...group}
+
+*/
