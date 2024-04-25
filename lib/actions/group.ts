@@ -6,7 +6,7 @@ import { createGroup } from "../data-access/group"
 export async function addGroup(name: string, id: string){
     try {
         await createGroup({name, id});
-        revalidatePath('/')
+        revalidatePath('/group/[groupId]')
         return {
             success: true,
             groupName: name,
