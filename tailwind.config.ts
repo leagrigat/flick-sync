@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss"
 
+// realtime colors: https://www.realtimecolors.com/?colors=383838-F5F5F5-333354-FFAB91-1E88E5&fonts=Inter-Inter
+
 const config = {
   darkMode: ["class"],
   content: [
