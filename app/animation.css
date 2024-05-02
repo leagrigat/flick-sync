@@ -1,0 +1,13 @@
+
+@keyframes landingPage {
+    0% {background-color: hsl(var(--accent));}
+    50% {background-color: hsl(var(--secondary));}
+    100% {background-color: hsl(var(--accent));}
+}
+
+.animation {
+    background-color: hsl(var(--accent));
+    animation-name: landingPage;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
