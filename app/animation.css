@@ -1,13 +1,51 @@
+/* Object animation */
 
 @keyframes landingPage {
-    0% {background-color: hsl(var(--accent));}
-    50% {background-color: hsl(var(--secondary));}
-    100% {background-color: hsl(var(--accent));}
+  0%, 100% {
+    background-color: hsl(var(--base-hue), 42%, 51%);
+    transform: rotate(180deg);
+    top: 0;
+    left: 0;
+  }
+  25% {
+    background-color: hsl(var(--base-hue), 50%, 60%);
+    /* transform: rotate(90deg); */
+  }
+  50% {
+    background-color: hsl(var(--base-hue), 30%, 40%);
+    /* transform: rotate(180deg); */
+  }
+  75% {
+    background-color: hsl(var(--base-hue), 42%, 51%);
+    /* transform: rotate(270deg); */
+  }
+  100% {
+    background-color: hsl(var(--base-hue), 42%, 51%);
+    transform: rotate(720deg);
+    top: 800px;
+    left: 800px;
+  }
 }
 
 .animation {
-    background-color: hsl(var(--accent));
-    animation-name: landingPage;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
+  opacity: 0.5;
+  animation-name: landingPage;
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  animation-iteration-count: infinite;
 }
+
+/* Background animation */
+
+@keyframes landingPageBackground {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* CLASS FOR APPLYING BACKGROUND GRADIENT 
+.animation-background {} */
