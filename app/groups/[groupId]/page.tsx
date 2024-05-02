@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Welcomepage() {
+function WelcomePage() {
   return (
     <div>
         <h1>WELCOME TO YOUR GROUP</h1>
@@ -8,4 +8,4 @@ function Welcomepage() {
   )
 }
 
-export default Welcomepage
+export default WelcomePage

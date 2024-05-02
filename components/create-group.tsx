@@ -4,8 +4,11 @@ import { createGroup } from '@/lib/data-access/group';
 import React, { ChangeEvent, useState } from 'react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useRouter } from 'next/navigation';
+import {toast} from 'react-toastify';
 
 export default function CreateGroup() {
+    const router = useRouter();  
     const [input, setInput] = useState("");
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -13,8 +16,17 @@ export default function CreateGroup() {
     }
 
     const handleAdd = async () => {
-        createGroup({name: input});
+      try {
+        const groupId = await createGroup({name: input}); // i think we have a name and id issue here - mixed up somehow?
         setInput("");
+        console.log(groupId)
+        router.push(`groups/${groupId}`)
+        toast.success(`Your group ${groupId} has been successfully created`)
+      }
+      catch(error) {
+        console.error("Failed to create group", error);
+        toast.error("Unable to create group. Please try again.")
+      }
     }
 
     // Button validation - don't work when input field empty
