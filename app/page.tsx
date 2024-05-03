@@ -2,6 +2,7 @@ import CreateGroup from "@/components/create-group";
 import { H1, P } from "@/components/ui/typography";
 
 export default function Home() {
+  console.log("test")
   return (
     <>
       <div className="w-screen h-screen flex flex-col items-center py-16 gap-8">

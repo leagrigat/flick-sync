@@ -11,10 +11,11 @@ export type NewGroup = typeof group.$inferInsert
 export async function createGroup(values: NewGroup){
     const {...newGroup} = values
     return db.transaction(async(tx) => {
-        await tx
+        const [result] = await tx
         .insert(group)
         .values(newGroup)
         .returning({id: group.id})
+        return result
     })
 }
 

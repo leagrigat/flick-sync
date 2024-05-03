@@ -15,13 +15,13 @@ export default function CreateGroup() {
         setInput(e.target.value);
     }
 
-    const handleAdd = async () => {
+    const handleGroupCreation = async () => {
       try {
-        const groupId = await createGroup({name: input}); // i think we have a name and id issue here - mixed up somehow?
+        const {id} = await createGroup({name: input}); // i think we have a name and id issue here - mixed up somehow?
         setInput("");
-        console.log(groupId)
-        router.push(`groups/${groupId}`)
-        toast.success(`Your group ${groupId} has been successfully created`)
+        console.log(id)
+        router.push(`groups/${id}`)
+        toast.success(`Your group ${id} has been successfully created`)
       }
       catch(error) {
         console.error("Failed to create group", error);
@@ -34,7 +34,7 @@ export default function CreateGroup() {
   return (
     <div className="flex w-full max-w-sm items-center space-x-2">
       <Input type="text" value={input} onChange={handleInput} placeholder="Please enter a group name" />
-      <Button onClick={handleAdd}>Create group</Button>
+      <Button onClick={handleGroupCreation}>Create group</Button>
     </div>
   )
 }
