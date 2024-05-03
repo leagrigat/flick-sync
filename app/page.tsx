@@ -6,7 +6,7 @@ export default function Home() {
     <>
       <div className="w-screen h-screen flex flex-col items-center py-16 gap-8">
         <H1>Welcome to FlickSync 🎬🍿</H1>
-        <P className="font-medium max-w-2xl text-center">
+        <P className="font-light max-w-2xl text-center">
           Your ultimate movie night companion. Create groups, announce
           screenings, track watched films, and share reviews — all in one place.
           Connect and enjoy cinema with friends like never before!
