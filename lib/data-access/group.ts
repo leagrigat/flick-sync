@@ -14,7 +14,7 @@ export async function createGroup(values: NewGroup){
         const [result] = await tx
         .insert(group)
         .values(newGroup)
-        .returning({id: group.id})
+        .returning({id: group.id, name:group.name})
         return result
     })
 }
