@@ -31,6 +31,7 @@ const config = {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          light: "hsla(var(--secondary-light))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -43,6 +44,7 @@ const config = {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          light: "hsla(var(--accent-light))"
         },
        info: {
         DEFAULT: "hsl(var(--info))",

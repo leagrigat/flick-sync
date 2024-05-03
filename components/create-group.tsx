@@ -32,16 +32,22 @@ export default function CreateGroup() {
   // Button validation - don't work when input field empty
 
   return (
-    <div className="flex gap-2 flex-col">
-      <P className="text-center">Please create a group to continue:</P>
-      <div className="flex w-full max-w-sm items-center space-x-2">
+    <div className="flex flex-col items-center gap-4 p-4 bg-secondary-light rounded-lg shadow-lg">
+      <P className="text-lg font-semibold text-primary">Start a new group:</P>
+      <div className="flex w-full max-w-md items-center space-x-2">
         <Input
           type="text"
           value={input}
           onChange={handleInput}
-          placeholder="Your group name"
+          placeholder="Enter group name"
+          className="flex-1 p-2 border-2 border-accent-light outline-none rounded"
         />
-        <Button onClick={handleGroupCreation}>Create group</Button>
+        <Button
+          onClick={handleGroupCreation}
+          className="bg-primary hover:bg-accent text-white font-bold py-2 px-4 rounded shadow"
+        >
+          Create
+        </Button>
       </div>
     </div>
   );
