@@ -1,11 +1,10 @@
 /* Object animation */
 
 @keyframes landingPage {
-  0%, 100% {
+  0% {
     background-color: hsl(var(--base-hue), 42%, 51%);
-    transform: rotate(180deg);
-    top: 0;
-    left: 0;
+    transform: rotate(90deg);
+    transform: translateY(-100px);
   }
   25% {
     background-color: hsl(var(--base-hue), 50%, 60%);
@@ -19,8 +18,7 @@
   100% {
     background-color: hsl(var(--base-hue), 42%, 51%);
     transform: rotate(720deg);
-    top: 800px;
-    left: 800px;
+    transform: translateY(calc(100px + 100vh));
   }
 }
 
@@ -28,7 +26,6 @@
   opacity: 0.5;
   animation-name: landingPage;
   animation-duration: 4s;
-  animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
   animation-iteration-count: infinite;
 }
 

@@ -12,8 +12,11 @@ export default function Home() {
           Connect and enjoy cinema with friends like never before!
         </P>
         <CreateGroup />
-        <div className="w-32 h-32 absolute animation"></div>
       </div>
+      {/*  <div className="w-32 h-32 absolute top-0 left-24 animation"></div>
+      <div className="w-8 h-8 absolute top-0 left-48 animation"></div>
+      <div className="w-24 h-24 absolute top-0 left-60 animation"></div>
+      <div className="w-32 h-32 absolute top-0 left-96 animation"></div> */}
     </>
   );
 }
