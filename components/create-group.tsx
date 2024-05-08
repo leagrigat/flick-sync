@@ -2,8 +2,7 @@
 
 import { createGroup } from "@/lib/data-access/group";
 import { z } from "zod";
-import { Form, SubmitHandler, useForm } from "react-hook-form";
-import React, { ChangeEvent, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ import { toast } from "react-toastify";
 import { P } from "@/components/ui/typography";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -26,7 +26,7 @@ export type CreateGroupFormType = z.infer<typeof CreateGroupFormSchema>;
 
 export default function CreateGroupForm() {
   const router = useRouter();
-  const { handleSubmit, control } = useForm<CreateGroupFormType>({
+  const form = useForm<CreateGroupFormType>({
     resolver: zodResolver(CreateGroupFormSchema),
     defaultValues: {
       name: "",
@@ -47,15 +47,14 @@ export default function CreateGroupForm() {
   return (
     <div className="flex flex-col items-center gap-4 p-4 bg-secondary-light rounded-lg shadow-lg">
       <P className="text-lg font-semibold text-primary">Start a new group:</P>
-      <div className="flex w-full max-w-md items-center space-x-2">
-        <Form>
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex w-full max-w-md items-center space-x-2">
             <FormField
-              control={control}
+              control={form.control}
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel></FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Enter group name"
@@ -73,22 +72,9 @@ export default function CreateGroupForm() {
             >
               Create
             </Button>
-          </form>
-        </Form>
-        {/* <Input
-          type="text"
-          value={input}
-          onChange={handleInput}
-          placeholder="Enter group name"
-          className="flex-1 p-2 border-2 border-accent-light outline-none rounded"
-        />
-        <Button
-          onClick={handleGroupCreation}
-          className="bg-primary hover:bg-accent text-white font-bold py-2 px-4 rounded shadow"
-        >
-          Create
-        </Button> */}
-      </div>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
