@@ -1,11 +1,11 @@
-import React from 'react'
+import { getMoviesFromTMDb } from "@/lib/actions/moviedb";
+import React from "react";
 
-function WelcomePage() {
+export default async function WelcomePage() {
+  const movies = await getMoviesFromTMDb();
   return (
     <div>
-        <h1>WELCOME TO YOUR GROUP</h1>
+      <h1>WELCOME TO YOUR GROUP</h1>
     </div>
-  )
+  );
 }
-
-export default WelcomePage
