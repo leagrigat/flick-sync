@@ -5,7 +5,7 @@ if (!TMDB_API_KEY) {
 }
 
 export async function getMoviesFromTMDb() {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}`;
+    const url = `https://api.themoviedb.org/3/search/movie?`;
 
     const response = await fetch(url);
 
