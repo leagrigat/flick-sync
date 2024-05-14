@@ -1,6 +1,7 @@
 "use client";
 
 import { getMoviesFromTMDb } from "@/lib/actions/moviedb";
+import useSWR from "swr";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import React from "react";
@@ -46,6 +47,8 @@ const AddWatchedMovieFormSchema = z.object({
 // export type AddWatchedMovieFormType = z.infer<typeof AddWatchedMovieFormSchema>;
 
 export default function AddWatchedMovieForm() {
+  const { data, error } = useSWR("");
+
   const form = useForm<z.infer<typeof AddWatchedMovieFormSchema>>({
     resolver: zodResolver(AddWatchedMovieFormSchema),
   });
