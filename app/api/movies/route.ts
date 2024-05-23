@@ -1,20 +1,27 @@
+import { NextResponse } from "next/server";
+
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
+const TMDB_ACCESS_TOKEN=process.env.TMDB_ACCESS_TOKEN;
 
 if (!TMDB_API_KEY) {
     throw new Error("Missing TMDB API key in .env.local");
 }
 
-const handler = async (req, res) => {
-    const {query} = req;
-    const {page = 1} = query;
+export async function GET(){
+  const url = `https://api.themoviedb.org/3/search/movie?query=terminator`;
 
-    try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.TMDB_API_KEY}&page=${page}`); // need different url?
-        res.status(200).json(response.data);
-    } catch(error) {
-        console.error('Failed to fetch data from TMDb', error);
-        res.status(500).json({ error: 'Failed to fetch data from TMDb' });
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
+        accept: "application/json"
+      }
+    });
+
+    const data = await response.json();
+
+    if(!response.ok) {
+        throw new Error("Failed to fetch movies from TMDb");
     }
-}
 
-export default handler;
+  return await NextResponse.json({data})
+}
