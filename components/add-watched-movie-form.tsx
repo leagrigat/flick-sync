@@ -1,6 +1,5 @@
 "use client";
 
-import { getMoviesFromTMDb } from "@/lib/actions/moviedb";
 import useSWR from "swr";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
@@ -44,10 +43,13 @@ const AddWatchedMovieFormSchema = z.object({
   movie: z.string({ required_error: "Please select a movie." }),
 });
 
-// export type AddWatchedMovieFormType = z.infer<typeof AddWatchedMovieFormSchema>;
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export default function AddWatchedMovieForm() {
-  const { data, error } = useSWR("");
+  const { data, isLoading, error } = useSWR("/api/movies", fetcher);
+
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   const form = useForm<z.infer<typeof AddWatchedMovieFormSchema>>({
     resolver: zodResolver(AddWatchedMovieFormSchema),
