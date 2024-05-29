@@ -1,4 +1,3 @@
-import { NextApiRequest } from "next";
 import { NextResponse } from "next/server";
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
@@ -30,14 +29,21 @@ export async function GET(req: Request) {
       },
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      throw new Error("Failed to fetch movies from TMDb");
+      const errorData = await response.json();
+      return NextResponse.json(
+        { error: "Failed to fetch movies from TMDb", details: errorData },
+        { status: response.status }
+      );
     }
 
-    return NextResponse.json({ data });
+    const data = await response.json();
+    return NextResponse.json({ movies: data.results });
   } catch (e) {
     console.error(e);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

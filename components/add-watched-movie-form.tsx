@@ -3,7 +3,8 @@
 import useSWR from "swr";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
-import React from "react";
+import React, { useCallback, useState } from "react";
+import debounce from "lodash/debounce";
 import {
   Form,
   FormControl,
@@ -30,32 +31,47 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CommandList } from "cmdk";
 
-const movies = [
-  { label: "Aftersun", value: "as" },
-  { label: "Only Lovers Left Alive", value: "olla" },
-  { label: "Burning", value: "bn" },
-  { label: "Hereditary", value: "hd" },
-  { label: "Moonlight", value: "ml" },
-  { label: "The Lord Of The Rings", value: "tlotr" },
-] as const;
+type Movie = {
+  title: string;
+  id: string;
+};
 
 const AddWatchedMovieFormSchema = z.object({
   movie: z.string({ required_error: "Please select a movie." }),
 });
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) =>
+  fetch(url)
+    .then((r) => r.json())
+    .then((data) => {
+      console.log("Fetched data", data);
+      return data;
+    });
 
 export default function AddWatchedMovieForm() {
-  const { data, isLoading, error } = useSWR("/api/movies", fetcher);
+  const [query, setQuery] = useState("");
+  const { data, error } = useSWR(
+    query ? `/api/movies?searchInput=${query}` : null,
+    fetcher
+  );
 
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
-
-  const form = useForm<z.infer<typeof AddWatchedMovieFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(AddWatchedMovieFormSchema),
   });
-  //   const movies = getMoviesFromTMDb();
-  //   function onSubmit
+
+  const handleSearch = useCallback(
+    debounce((value: string) => {
+      setQuery(value);
+    }, 100),
+    []
+  );
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearch(event.target.value);
+  };
+
+  if (error) return <div>Failed to load</div>;
+  //if (!data) return <div>Loading...</div>;
 
   return (
     <Form {...form}>
@@ -78,8 +94,9 @@ export default function AddWatchedMovieForm() {
                       )}
                     >
                       {field.value
-                        ? movies.find((movie) => movie.value === field.value)
-                            ?.label
+                        ? data.movies.find(
+                            (movie: Movie) => movie.id === field.value
+                          )?.label
                         : "Select movie"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -87,26 +104,28 @@ export default function AddWatchedMovieForm() {
                 </PopoverTrigger>
                 <PopoverContent className="w-[200px] p-0">
                   <Command>
-                    <CommandInput
+                    <input
                       placeholder="Search movie..."
                       className="h-9"
+                      onChange={handleChange}
+                      value={query}
                     />
                     <CommandEmpty>No movie found.</CommandEmpty>
                     <CommandList>
                       <CommandGroup>
-                        {movies.map((movie) => (
+                        {data?.movies?.map((movie: Movie) => (
                           <CommandItem
-                            value={movie.label}
-                            key={movie.value}
+                            value={movie.title}
+                            key={movie.id}
                             onSelect={() => {
-                              form.setValue("movie", movie.value);
+                              form.setValue("movie", movie.id);
                             }}
                           >
-                            {movie.label}
+                            {movie.title}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                movie.value === field.value
+                                movie.id === field.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
@@ -125,6 +144,7 @@ export default function AddWatchedMovieForm() {
             </FormItem>
           )}
         />
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
